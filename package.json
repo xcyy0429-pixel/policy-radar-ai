@@ -1,0 +1,19 @@
+{
+  "name": "policy-radar-ai",
+  "version": "1.0.0",
+  "description": "科技政策雷达AI - 人工智能与机器人产业政策搜索平台",
+  "main": "rss-crawler.js",
+  "scripts": {
+    "crawl": "node crawler.js",
+    "rss": "node rss-crawler.js",
+    "start": "python -m http.server 8000"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "cheerio": "^1.0.0-rc.12",
+    "xml2js": "^0.6.2"
+  },
+  "keywords": ["政策", "人工智能", "机器人", "爬虫", "RSS"],
+  "author": "",
+  "license": "MIT"
+}

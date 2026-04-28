@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技政策雷达AI - 人工智能与机器人产业政策搜索平台</title>
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e40af;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --tag-ai: #8b5cf6;
+            --tag-robot: #06b6d4;
+            --tag-sz: #f59e0b;
+            --tag-apply: #10b981;
+            --gradient-1: linear-gradient(135deg, #1a56db 0%, #06b6d4 100%);
+            --gradient-2: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1a56db 100%);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.06);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--gradient-2);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(26,86,219,0.4);
+        }
+
+        .logo-text h1 {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text p {
+            font-size: 10px;
+            opacity: 0.75;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 9px;
+            opacity: 0.7;
+        }
+
+        /* ===== SEARCH BAR ===== */
+        .search-section {
+            padding: 0 0 4px;
+        }
+
+        .search-bar {
+            display: flex;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: var(--radius);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus-within {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 7px 14px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .search-bar input::placeholder { color: rgba(255,255,255,0.5); }
+
+        .search-bar button {
+            padding: 7px 16px;
+            background: var(--gradient-1);
+            border: none;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        .search-bar button:hover { opacity: 0.9; }
+
+        /* ===== FILTER TAGS ===== */
+        .filter-section {
+            padding: 2px 0 4px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-right: 4px;
+        }
+
+        .filter-tag {
+            padding: 3px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.8);
+            user-select: none;
+        }
+
+        .filter-tag:hover { background: rgba(255,255,255,0.15); color: white; }
+
+        .filter-tag.active {
+            background: rgba(255,255,255,0.22);
+            color: white;
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .filter-tag.active[data-category="ai"] { background: rgba(139,92,246,0.4); border-color: #8b5cf6; }
+        .filter-tag.active[data-category="robot"] { background: rgba(6,182,212,0.4); border-color: #06b6d4; }
+        .filter-tag.active[data-category="shenzhen"] { background: rgba(245,158,11,0.4); border-color: #f59e0b; }
+        .filter-tag.active[data-category="apply"] { background: rgba(16,185,129,0.4); border-color: #10b981; }
+
+        /* ===== MAIN CONTENT ===== */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .main { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .header-stats { display: none; }
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+        .sidebar-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .sidebar-card-header {
+            padding: 14px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-card-body { padding: 12px; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        .nav-item:hover { background: #f1f5f9; }
+        .nav-item.active { background: #eff6ff; color: var(--primary); font-weight: 600; }
+
+        .nav-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .nav-icon.ai { background: #f3e8ff; }
+        .nav-icon.robot { background: #ecfeff; }
+        .nav-icon.sz { background: #fef3c7; }
+        .nav-icon.apply { background: #d1fae5; }
+
+        .nav-count {
+            margin-left: auto;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* Timeline */
+        .timeline-item {
+            padding: 8px 12px;
+            border-left: 2px solid var(--border);
+            margin-left: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .timeline-item:hover { border-left-color: var(--primary); background: #f8fafc; }
+        .timeline-item .t-date { color: var(--text-light); font-size: 11px; }
+        .timeline-item .t-title { margin-top: 2px; color: var(--text); }
+
+        /* ===== POLICY CARDS ===== */
+        .content-area { min-width: 0; }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .results-count {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .results-count strong { color: var(--text); }
+
+        .sort-select {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .policy-list { display: flex; flex-direction: column; gap: 16px; }
+
+        .policy-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .policy-card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-2px);
+            border-color: var(--primary-light);
+        }
+
+        .policy-card-inner { padding: 20px 24px; }
+
+        .policy-card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .policy-level {
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .level-national { background: #fee2e2; color: #dc2626; }
+        .level-provincial { background: #fef3c7; color: #d97706; }
+        .level-city { background: #dbeafe; color: #2563eb; }
+        .level-district { background: #d1fae5; color: #059669; }
+
+        .policy-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .policy-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .policy-meta span { display: flex; align-items: center; gap: 4px; }
+
+        .policy-summary {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .policy-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+        .policy-tag {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .tag-ai { background: #f3e8ff; color: #7c3aed; }
+        .tag-robot { background: #ecfeff; color: #0891b2; }
+        .tag-subsidy { background: #fef3c7; color: #b45309; }
+        .tag-standard { background: #f0fdf4; color: #15803d; }
+        .tag-plan { background: #eff6ff; color: #1d4ed8; }
+        .tag-shenzhen { background: #fff7ed; color: #c2410c; }
+
+        .policy-card-footer {
+            padding: 12px 24px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .policy-link {
+            font-size: 12px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .policy-link:hover { color: var(--primary-dark); text-decoration: underline; }
+
+        .policy-relevance {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .relevance-bar {
+            display: inline-block;
+            width: 60px;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        .relevance-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: var(--success);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            overflow-y: auto;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.show { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius);
+            max-width: 800px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f1f5f9;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover { background: #e2e8f0; }
+
+        .modal-body { padding: 24px 28px; }
+
+        .modal-body h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--text);
+        }
+
+        .modal-body h3:first-child { margin-top: 0; }
+
+        .modal-body p, .modal-body li {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .modal-body ul { padding-left: 20px; margin: 8px 0; }
+        .modal-body li { margin-bottom: 4px; }
+
+        .modal-footer {
+            padding: 16px 28px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary { background: var(--gradient-1); color: white; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-outline { background: white; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { background: #f8fafc; }
+
+        /* ===== HOT KEYWORDS ===== */
+        .hot-keywords {
+            padding: 2px 0 0;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .hot-kw {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .hot-kw:hover { color: white; }
+        .hot-kw::before { content: '#'; opacity: 0.5; }
+
+        /* ===== PORTAL LINKS ===== */
+        .portal-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            background: #f8fafc;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .portal-link:last-child { margin-bottom: 0; }
+        .portal-link:hover { background: #eff6ff; border-color: var(--primary-light); }
+        .portal-icon {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+        .portal-icon.gov { background: #fee2e2; }
+        .portal-icon.stic { background: #dbeafe; }
+        .portal-icon.gxj { background: #fef3c7; }
+        .portal-icon.gd { background: #d1fae5; }
+        .portal-name { font-size: 13px; font-weight: 600; }
+        .portal-desc { font-size: 11px; color: var(--text-light); }
+
+        /* ===== CONTACT CARDS ===== */
+        .contact-item {
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            background: #f8fafc;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        .contact-item:last-child { margin-bottom: 0; }
+        .contact-item .ci-name { font-weight: 600; color: var(--text); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .contact-item .ci-row { color: var(--text-light); line-height: 1.7; }
+        .contact-item .ci-row a { color: var(--primary); text-decoration: none; }
+        .contact-item .ci-row a:hover { text-decoration: underline; }
+        .contact-item .ci-phone { color: var(--primary); font-weight: 600; }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
+        .empty-state h3 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+        .empty-state p { font-size: 14px; }
+
+        /* ===== API STATUS ===== */
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 20px;
+        }
+
+        .api-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ===== LOADING ===== */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner.show { display: block; }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .page-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer a { color: var(--primary); text-decoration: none; }
+
+        /* ===== DATA SOURCE BADGES ===== */
+        .data-sources {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding: 4px 0 8px;
+        }
+
+        .source-badge {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .source-badge .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        /* ===== SHARE PANEL ===== */
+        .share-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+            border: 1px solid #dbeafe;
+        }
+
+        .share-card .sidebar-card-header {
+            background: rgba(255,255,255,0.5);
+        }
+
+        .share-summary {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .share-url {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: white;
+            font-size: 12px;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .share-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .share-actions .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 9px 12px;
+        }
+
+        .share-hint {
+            font-size: 11px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .share-hint code {
+            background: rgba(255,255,255,0.8);
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+
+        /* Quick info cards in sidebar */
+        .quick-info {
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            background: #f8fafc;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .quick-info:last-child { margin-bottom: 0; }
+        .quick-info .qi-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+        .quick-info .qi-desc { color: var(--text-light); line-height: 1.5; }
+        .quick-info .qi-amount { color: var(--primary); font-weight: 700; font-size: 14px; }
+
+        /* highlight search terms */
+        mark {
+            background: #fef08a;
+            color: inherit;
+            padding: 1px 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="header-inner">
+        <div class="header-top">
+            <div class="logo">
+                <div class="logo-icon">🛰️</div>
+                <div class="logo-text">
+                    <h1>科技政策雷达AI</h1>
+                    <p>人工智能 · 机器人产业 · 政策搜索平台</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-num" id="totalPolicies">0</div>
+                    <div class="stat-label">收录政策</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" id="totalDepts">12</div>
+                    <div class="stat-label">来源部门</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">6</div>
+                    <div class="stat-label">数据源接入</div>
+                </div>
+            </div>
+            <div class="api-status" style="cursor:pointer;" onclick="manualRefresh()" title="点击刷新数据">
+                <div class="api-dot"></div>
+                <span style="color:rgba(255,255,255,0.7)">数据源在线</span>
+                <span style="margin-left:8px;font-size:14px;">🔄</span>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="搜索政策关键词，如：人工智能+、人形机器人、算力补贴、科技项目申报..." autofocus>
+                <button onclick="performSearch()">🔍 搜索政策</button>
+            </div>
+            <div class="hot-keywords">
+                <span class="hot-kw" onclick="quickSearch('人工智能+')">人工智能+</span>
+                <span class="hot-kw" onclick="quickSearch('人形机器人')">人形机器人</span>
+                <span class="hot-kw" onclick="quickSearch('算力补贴')">算力补贴</span>
+                <span class="hot-kw" onclick="quickSearch('深圳')">深圳扶持</span>
+                <span class="hot-kw" onclick="quickSearch('科技项目申报')">科技项目申报</span>
+                <span class="hot-kw" onclick="quickSearch('具身智能')">具身智能</span>
+                <span class="hot-kw" onclick="quickSearch('标准化')">标准化</span>
+                <span class="hot-kw" onclick="quickSearch('训力券')">训力券</span>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <span class="filter-label">筛选：</span>
+            <span class="filter-tag active" data-category="all" onclick="toggleFilter(this)">全部</span>
+            <span class="filter-tag" data-category="ai" onclick="toggleFilter(this)">🤖 人工智能</span>
+            <span class="filter-tag" data-category="robot" onclick="toggleFilter(this)">🦾 机器人产业</span>
+            <span class="filter-tag" data-category="shenzhen" onclick="toggleFilter(this)">🏙️ 深圳政策</span>
+            <span class="filter-tag" data-category="apply" onclick="toggleFilter(this)">📋 项目申报</span>
+        </div>
+
+    </div>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="main">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-card">
+            <div class="sidebar-card-header">📂 政策分类</div>
+            <div class="sidebar-card-body">
+                <div class="nav-item active" onclick="filterByCategory('all', this)">
+                    <div class="nav-icon ai">📊</div>
+                    <span>全部政策</span>
+                    <span class="nav-count" id="countAll">0</span>
+                </div>
+                <div class="nav-item" onclick="filterByCategory('ai', this)">
+                    <div class="nav-icon ai">🤖</div>
+                    <span>人工智能政策</span>
+                    <span class="nav-count" id="countAi">0</span>
+                </div>
+                <div class="nav-item" onclick="filterByCategory('robot', this)">
+                    <div class="nav-icon robot">🦾</div>
+                    <span>机器人产业政策</span>
+                    <span class="nav-count" id="countRobot">0</span>
+                </div>
+                <div class="nav-item" onclick="filterByCategory('shenzhen', this)">
+                    <div class="nav-icon sz">🏙️</div>
+                    <span>深圳扶持政策</span>
+                    <span class="nav-count" id="countSz">0</span>
+                </div>
+                <div class="nav-item" onclick="filterByCategory('apply', this)">
+                    <div class="nav-icon apply">📋</div>
+                    <span>项目申报指南</span>
+                    <span class="nav-count" id="countApply">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-card-header">💰 重点扶持速览</div>
+            <div class="sidebar-card-body">
+                <div class="quick-info">
+                    <div class="qi-title">🎫 深圳"训力券"</div>
+                    <div class="qi-amount">最高5亿元</div>
+                    <div class="qi-desc">降低AI模型研发训练成本</div>
+                </div>
+                <div class="quick-info">
+                    <div class="qi-title">🏗️ 公共技术服务平台</div>
+                    <div class="qi-amount">最高2000万元</div>
+                    <div class="qi-desc">AI公共技术服务平台建设资助</div>
+                </div>
+                <div class="quick-info">
+                    <div class="qi-title">🚀 留学人才创业</div>
+                    <div class="qi-amount">最高100万元</div>
+                    <div class="qi-desc">AI留学人才一次性创业资助</div>
+                </div>
+                <div class="quick-info">
+                    <div class="qi-title">🤖 具身智能目标</div>
+                    <div class="qi-amount">1000亿+</div>
+                    <div class="qi-desc">2027年关联产业规模目标</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-card-header">🚀 项目申报入口</div>
+            <div class="sidebar-card-body">
+                <a class="portal-link" href="https://sticapply.sz.gov.cn/" target="_blank">
+                    <div class="portal-icon stic">🔬</div>
+                    <div>
+                        <div class="portal-name">深圳市科技业务管理系统</div>
+                        <div class="portal-desc">科创委项目申报 · sticapply.sz.gov.cn</div>
+                    </div>
+                </a>
+                <a class="portal-link" href="https://gxj.sz.gov.cn/xxgk/xxgkml/qt/tzgg/" target="_blank">
+                    <div class="portal-icon gxj">🏭</div>
+                    <div>
+                        <div class="portal-name">深圳市工信局通知公告</div>
+                        <div class="portal-desc">产业扶持申报 · gxj.sz.gov.cn</div>
+                    </div>
+                </a>
+                <a class="portal-link" href="https://www.gdzwfw.gov.cn/" target="_blank">
+                    <div class="portal-icon gd">🏛️</div>
+                    <div>
+                        <div class="portal-name">广东政务服务网</div>
+                        <div class="portal-desc">省级政务办理 · gdzwfw.gov.cn</div>
+                    </div>
+                </a>
+                <a class="portal-link" href="http://stic.sz.gov.cn/xxgk/zdly/sbzn/" target="_blank">
+                    <div class="portal-icon gov">📋</div>
+                    <div>
+                        <div class="portal-name">科创委申报指南汇总</div>
+                        <div class="portal-desc">全部申报指南一览 · stic.sz.gov.cn</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-card-header">📞 申报咨询</div>
+            <div class="sidebar-card-body">
+                <div class="contact-item">
+                    <div class="ci-name">🔬 深圳市科创委</div>
+                    <div class="ci-row">电话：<span class="ci-phone">0755-88127569</span></div>
+                    <div class="ci-row">网站：<a href="https://stic.sz.gov.cn" target="_blank">stic.sz.gov.cn</a></div>
+                </div>
+                <div class="contact-item">
+                    <div class="ci-name">🏭 深圳市工信局</div>
+                    <div class="ci-row">电话：<span class="ci-phone">0755-88102553</span></div>
+                    <div class="ci-row">邮箱：<a href="mailto:xzc@gxj.sz.gov.cn">xzc@gxj.sz.gov.cn</a></div>
+                    <div class="ci-row">地址：福田区福中三路市民中心三楼</div>
+                </div>
+                <div class="contact-item">
+                    <div class="ci-name">💻 科技业务系统技术支持</div>
+                    <div class="ci-row">电话：<span class="ci-phone">0755-86576088</span></div>
+                    <div class="ci-row">备用：<span class="ci-phone">0755-86576087</span></div>
+                    <div class="ci-row">邮箱：<a href="mailto:szstisupport@nsccsz.cn">szstisupport@nsccsz.cn</a></div>
+                </div>
+                <div class="contact-item">
+                    <div class="ci-name">📱 深圳政务服务热线</div>
+                    <div class="ci-row">电话：<span class="ci-phone">12345</span></div>
+                    <div class="ci-row">办公：工作日 9:00-12:00, 14:00-18:00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-card-header">🕐 最新动态</div>
+            <div class="sidebar-card-body" id="timelineList">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Content -->
+    <div class="content-area">
+        <div class="results-header">
+            <div class="results-count">
+                共找到 <strong id="resultCount">0</strong> 条相关政策
+            </div>
+            <select class="sort-select" id="sortSelect" onchange="sortPolicies()">
+                <option value="date">按时间排序</option>
+                <option value="relevance">按相关度排序</option>
+                <option value="level">按级别排序</option>
+            </select>
+        </div>
+
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner"></div>
+            <div style="font-size:13px;color:var(--text-light)">正在从政策数据源获取数据...</div>
+        </div>
+
+        <div class="policy-list" id="policyList">
+            <!-- Populated by JS -->
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <div class="empty-icon">🔍</div>
+            <h3>未找到匹配的政策</h3>
+            <p>试试其他关键词，或切换分类筛选</p>
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+    </div>
+</div>
+
+<!-- ===== DETAIL MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div>
+                <span class="policy-level" id="modalLevel"></span>
+                <h2 style="font-size:18px;margin-top:10px;line-height:1.5;" id="modalTitle"></h2>
+            </div>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer">
+            <a class="btn btn-outline" id="modalLink" href="#" target="_blank">🔗 查看原文</a>
+            <button class="btn btn-primary" onclick="generateDraft()">📝 生成申报参考</button>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>科技政策雷达AI © 2026 | 数据来源：中国政府网、工信部、深圳市科创委、深圳市工信局</p>
+    <p style="margin-top:4px;">本平台仅供政策查询参考，具体以各部门官方发布为准 | <a href="https://stic.sz.gov.cn" target="_blank">深圳科创委</a> · <a href="https://gxj.sz.gov.cn" target="_blank">深圳工信局</a> · <a href="https://www.gov.cn" target="_blank">中国政府网</a></p>
+</footer>
+
+<script>
+// ===== POLICY DATABASE =====
+const POLICIES = [
+{
+  "id": 1,
+  "title": "工业和信息化部发布《人形机器人与具身智能标准体系(2026版)》",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "工业和信息化部",
+  "date": "2026-02-28",
+  "category": [
+    "ai",
+    "robot"
+  ],
+  "tags": [
+    "人形机器人",
+    "具身智能",
+    "标准体系",
+    "智能制造"
+  ],
+  "summary": "我国首个覆盖人形机器人全产业链、全生命周期的国家级标准体系，涵盖基础共性、类脑与智算、肢体与部组件、整机与系统、应用、安全伦理等6部分，由120余家产学研单位联合编制。",
+  "url": "https://www.news.cn/20260228/c27e2dfdb0f4496494c7e4991f2e8c2f/c.html",
+  "relevance": 95,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 2,
+  "title": "关于印发《深圳市\"人工智能+\"先进制造业行动计划（2026-2027年）》的通知",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市工信局",
+  "date": "2026-03-15",
+  "category": [
+    "ai",
+    "robot",
+    "shenzhen"
+  ],
+  "tags": [
+    "深圳",
+    "人工智能",
+    "智能制造"
+  ],
+  "summary": "推动大模型、智能体、机器学习、计算机视觉深度应用于服装、钟表、眼镜、珠宝等传统产业智能化升级。",
+  "url": "http://gxj.sz.gov.cn/gkmlpt/content/12/12645/post_12645602.html",
+  "relevance": 90,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 3,
+  "title": "深圳市打造人工智能OPC创业生态引领地行动计划（2026-2027年）",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市工信局",
+  "date": "2026-02-20",
+  "category": [
+    "ai",
+    "shenzhen"
+  ],
+  "tags": [
+    "深圳",
+    "人工智能",
+    "创业生态"
+  ],
+  "summary": "构建以开放平台（Open）、合作伙伴（Partner）、社区（Community）为核心的AI创业生态体系。",
+  "url": "http://gxj.sz.gov.cn/gkmlpt/content/12/12602/post_12602272.html",
+  "relevance": 83,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 4,
+  "title": "工业和信息化部：2025年工业和信息化发展主要目标任务顺利完成",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "工业和信息化部",
+  "date": "2026-01-15",
+  "category": [
+    "ai",
+    "robot"
+  ],
+  "tags": [
+    "智能制造",
+    "工业发展",
+    "机器人"
+  ],
+  "summary": "2025年全国已建成3.5万个基础级、8200+先进级、500+卓越级智能工厂，培育15个领航级智能工厂。人形机器人已实现站得稳、走得稳、跑得快。",
+  "url": "https://www.miit.gov.cn/xwfb/bldhd/art/2026/art_4ba01aa6d2f54ced8ba3490ea4fb52c4.html",
+  "relevance": 77,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 5,
+  "title": "工信部印发《工业互联网和人工智能融合赋能行动方案》",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "工业和信息化部",
+  "date": "2026-01-06",
+  "category": [
+    "ai",
+    "robot"
+  ],
+  "tags": [
+    "工业互联网",
+    "人工智能",
+    "融合赋能",
+    "智能制造"
+  ],
+  "summary": "到2028年推动不少于50000家企业实施新型工业网络改造升级，在20个重点行业打造高质量数据集，通过基础底座升级、数据模型互通、应用模式焕新、产业生态融通四大行动推动AI与工业互联网深度融合。",
+  "url": "http://www.news.cn/tech/20260109/90d2eea9e07848828f51a43033ffaaad/c.html",
+  "relevance": 92,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 6,
+  "title": "工信部印发《推动工业互联网平台高质量发展行动方案（2026—2028年）》",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "工业和信息化部",
+  "date": "2026-01-09",
+  "category": [
+    "ai"
+  ],
+  "tags": [
+    "工业互联网",
+    "平台经济",
+    "数字化转型",
+    "智能制造"
+  ],
+  "summary": "部署2026-2028年工业互联网平台高质量发展路径，支持平台企业聚焦重点行业高价值场景，培育流程自动化助手、智慧巡检数字人、具身智能装备等工业场景智能体。",
+  "url": "http://www.cctime.com/m/1727217.htm",
+  "relevance": 85,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 7,
+  "title": "国家互联网信息办公室关于发布2025年生成式人工智能服务已备案信息的公告",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "国家网信办",
+  "date": "2026-01-09",
+  "category": [
+    "ai"
+  ],
+  "tags": [
+    "人工智能",
+    "大模型",
+    "备案"
+  ],
+  "summary": "截至2025年底，共748个生成式AI服务完成备案，435个AI应用完成登记。2025年新增446个AI服务备案。",
+  "url": "https://www.cac.gov.cn/2026-01/09/c_1769688009588554.htm",
+  "relevance": 82,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 8,
+  "title": "工业和信息化部等八部门关于印发《\"人工智能+制造\"专项行动实施意见》的通知",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "工业和信息化部等八部门",
+  "date": "2026-01-07",
+  "category": [
+    "ai",
+    "robot"
+  ],
+  "tags": [
+    "人工智能",
+    "智能制造",
+    "AI+制造"
+  ],
+  "summary": "八部门联合部署AI+制造专项行动，推动智能化转型任务落地重点行业、领域，发布制造业企业AI应用实施指南。到2027年推动3-5个通用大模型在制造业深度应用，推出1000个高水平工业智能体。",
+  "url": "https://www.miit.gov.cn/zwgk/zcwj/wjfb/tz/art/2026/art_01010414608a4226b30687773bb21bdf.html",
+  "relevance": 96,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 9,
+  "title": "网络安全法修改——积极应对人工智能治理安全挑战",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "国家网信办",
+  "date": "2026-01-02",
+  "category": [
+    "ai"
+  ],
+  "tags": [
+    "人工智能",
+    "安全监管",
+    "网络安全"
+  ],
+  "summary": "网络安全法新增AI相关条款，支持基础AI研究和算法开发，推动训练数据资源基础设施建设。2026年1月1日起施行。",
+  "url": "https://www.cac.gov.cn/2026-01/02/c_1769093523928606.htm",
+  "relevance": 78,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 10,
+  "title": "人工智能拟人化互动服务管理暂行办法",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "国家网信办",
+  "date": "2025-12-28",
+  "category": [
+    "ai"
+  ],
+  "tags": [
+    "人工智能",
+    "安全监管",
+    "拟人化"
+  ],
+  "summary": "规范AI拟人化互动服务（如伴侣机器人、虚拟偶像），要求明确告知用户正在与AI交互，对未成年人实施特殊保护。",
+  "url": "https://www.cac.gov.cn/2025-12/28/c_1768662848000498.htm",
+  "relevance": 72,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 11,
+  "title": "人工智能+行动加速赋能经济社会高质量发展",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "国家网信办",
+  "date": "2025-12-09",
+  "category": [
+    "ai"
+  ],
+  "tags": [
+    "人工智能",
+    "AI+",
+    "经济发展"
+  ],
+  "summary": "我国AI企业超5300家占全球15%，2024年产业规模超9000亿元同比增长24%。到2027年智能终端普及率超70%。",
+  "url": "https://www.cac.gov.cn/2025-12/09/c_1767006260045309.htm",
+  "relevance": 80,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 12,
+  "title": "2025年度深圳市重点产业研发计划（第二批）项目申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-11-28",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "项目申报",
+    "重点产业",
+    "研发计划",
+    "深圳"
+  ],
+  "summary": "第二批重点产业研发计划项目申请。网上填报受理：2025年11月28日至12月29日18:00，申请单位必须自主申报。",
+  "url": "https://www.baicebao.com/portal/policy/details/id/5/acid/1072893/cid/31.html",
+  "relevance": 89,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 13,
+  "title": "2025年度深圳市自然科学基金计划重点项目新一代信息与计算技术（第一批）申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-09-10",
+  "category": [
+    "apply",
+    "ai",
+    "shenzhen"
+  ],
+  "tags": [
+    "自然科学基金",
+    "信息技术",
+    "基础研究",
+    "深圳"
+  ],
+  "summary": "聚焦新一代信息与计算技术领域的基础研究重点项目，支持人工智能、大数据等前沿方向。",
+  "url": "https://stic.sz.gov.cn/xxgk/tzgg/content/post_12491615.html",
+  "relevance": 86,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 14,
+  "title": "国务院关于深入实施人工智能+行动的意见",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "国务院",
+  "date": "2025-08-26",
+  "category": [
+    "ai"
+  ],
+  "tags": [
+    "人工智能",
+    "AI+",
+    "顶层设计"
+  ],
+  "summary": "国务院首个系统性AI顶层设计文件。六大行动：AI+科技、产业、消费、民生、治理、全球合作。到2027年普及率超70%，2030年超90%。",
+  "url": "https://www.cac.gov.cn/2025-08/27/c_1758018277755538.htm",
+  "relevance": 98,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 15,
+  "title": "2026年度深圳市重点产业研发计划承接国家重大科技项目产业化专项申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-07-20",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "项目申报",
+    "产业化",
+    "科技专项",
+    "深圳"
+  ],
+  "summary": "支持承接国家重大科技项目在深产业化落地。网上填报受理：2025年8月1日-9月1日（18:00截止），通过深圳市科技业务管理系统在线填报。",
+  "url": "https://stic.sz.gov.cn/xxgk/tzgg/content/post_12304791.html",
+  "relevance": 92,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 16,
+  "title": "2025年人工智能产业及赋能新型工业化创新任务揭榜挂帅工作通知",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "工业和信息化部",
+  "date": "2025-06-15",
+  "category": [
+    "ai",
+    "apply"
+  ],
+  "tags": [
+    "人工智能",
+    "揭榜挂帅",
+    "项目申报"
+  ],
+  "summary": "工信部开展AI产业及赋能新型工业化创新任务揭榜挂帅工作，面向全社会征集解决方案。",
+  "url": "https://www.miit.gov.cn/jgsj/kjs/wjfb/art/2025/art_a8465500de45444dbea19e8064d97ffc.html",
+  "relevance": 88,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 17,
+  "title": "2026年深圳市企业技术改造项目扶持计划申报指南（4类项目）",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市工信局",
+  "date": "2025-06-20",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "技术改造",
+    "设备更新",
+    "智能化改造",
+    "项目申报"
+  ],
+  "summary": "含重大技术改造、设备更新类技术改造、智能化改造、技术改造贷款租赁贴息4个项目类别的申报指南。",
+  "url": "https://www.sz.gov.cn/cn/xxgk/zfxxgj/tzgg/content/post_12261657.html",
+  "relevance": 85,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 18,
+  "title": "深圳市第二批战略性新兴产业专项资金项目申报指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市发改委",
+  "date": "2025-05-20",
+  "category": [
+    "apply",
+    "ai",
+    "shenzhen"
+  ],
+  "tags": [
+    "战略新兴产业",
+    "专项资金",
+    "项目申报",
+    "深圳"
+  ],
+  "summary": "2025年第二批战略性新兴产业专项资金项目申报，覆盖人工智能、集成电路、新能源等重点产业。",
+  "url": "https://baicebao.com/portal/policy/details/acid/1031658/id/5/cid/31.html",
+  "relevance": 84,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 19,
+  "title": "2025年度深圳市基础研究专项自然科学基金计划青年项目申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-05-15",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "青年基金",
+    "基础研究",
+    "项目申报",
+    "深圳"
+  ],
+  "summary": "面向在深青年科研人员的基金项目，支持35岁以下青年科学家开展前沿基础研究。",
+  "url": "https://stic.sz.gov.cn/gkmlpt/content/12/12204/post_12204522.html",
+  "relevance": 78,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 20,
+  "title": "2025年度深圳市基础研究专项自然科学基金计划面上项目申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-04-30",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "自然科学基金",
+    "基础研究",
+    "项目申报",
+    "深圳"
+  ],
+  "summary": "面上项目申请，网上填报受理：2025年4月30日-6月4日。支持AI、新材料、生物医药等前沿基础研究。",
+  "url": "https://stic.sz.gov.cn/xxgk/tzgg/content/post_12153774.html",
+  "relevance": 82,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 21,
+  "title": "2025年度深圳市重点实验室组建资助项目申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-04-28",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "重点实验室",
+    "资助",
+    "项目申报",
+    "深圳"
+  ],
+  "summary": "重点实验室组建资助项目，网上填报受理：2025年4月28日-5月28日（18:00截止）。支持AI、机器人等领域重点实验室建设。",
+  "url": "https://stic.sz.gov.cn/xxgk/tzgg/content/post_12142830.html",
+  "relevance": 84,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 22,
+  "title": "2025年度深圳市技术转移和成果转化项目申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-04-15",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "成果转化",
+    "技术转移",
+    "项目申报",
+    "深圳"
+  ],
+  "summary": "支持科技成果在深圳转移转化，推动高校科研院所技术成果产业化落地。",
+  "url": "https://baicebao.com/portal/policy/details/acid/1017478/id/5/cid/31.html",
+  "relevance": 80,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 23,
+  "title": "深圳市工业和信息化局智能终端产业发展扶持计划操作规程",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市工信局",
+  "date": "2025-04-10",
+  "category": [
+    "ai",
+    "shenzhen",
+    "apply"
+  ],
+  "tags": [
+    "深圳",
+    "产业扶持",
+    "AI终端",
+    "项目申报"
+  ],
+  "summary": "智能终端产业发展扶持计划申报操作规程。资助标准：按项目总投入15%给予最高2000万元支持。",
+  "url": "https://gxj.sz.gov.cn/gkmlpt/content/12/12080/post_12080884.html",
+  "relevance": 86,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 24,
+  "title": "深圳市具身智能机器人技术创新与产业发展政策申报指引",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-04-01",
+  "category": [
+    "robot",
+    "shenzhen",
+    "apply"
+  ],
+  "tags": [
+    "具身智能",
+    "项目申报",
+    "揭榜挂帅"
+  ],
+  "summary": "具身智能机器人科技重大专项申报指引，采用揭榜挂帅、项目经理人制等方式，覆盖AI芯片、灵巧手、具身基座大模型等攻关方向。",
+  "url": "https://stic.sz.gov.cn/xxgk/tzgg/content/post_12081948.html",
+  "relevance": 93,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 25,
+  "title": "2025年专精特新小巨人企业认定和复核工作通知",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "工业和信息化部",
+  "date": "2025-04-01",
+  "category": [
+    "apply"
+  ],
+  "tags": [
+    "专精特新",
+    "小巨人",
+    "企业认定",
+    "项目申报"
+  ],
+  "summary": "2025年专精特新小巨人企业认定工作。深圳87家企业入选重点小巨人，每家可获最高600万元中央奖补，连续支持三年。",
+  "url": "https://www.kbosschina.com/tonggao/6582.html",
+  "relevance": 88,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 26,
+  "title": "2025年度深圳市重点产业研发计划（第一批）项目申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-03-15",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "项目申报",
+    "重点产业",
+    "研发计划",
+    "深圳"
+  ],
+  "summary": "2025年度重点产业研发计划第一批项目申请指南，覆盖人工智能、新一代信息技术等领域，通过科技业务管理系统在线填报。",
+  "url": "https://stic.sz.gov.cn/xxgk/tzgg/content/post_12302088.html",
+  "relevance": 90,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 27,
+  "title": "人工智能生成合成内容标识办法",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "国家网信办等四部门",
+  "date": "2025-03-14",
+  "category": [
+    "ai"
+  ],
+  "tags": [
+    "人工智能",
+    "AIGC",
+    "内容标识"
+  ],
+  "summary": "中国首个AI内容标识规范，要求对生成内容添加显式标签和隐式元数据标记，2025年9月1日起施行。",
+  "url": "https://www.cac.gov.cn/2025-03/14/c_1743654684782215.htm",
+  "relevance": 75,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 28,
+  "title": "深圳市工信局打造人工智能先锋城市项目扶持计划操作规程",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市工信局",
+  "date": "2025-03-10",
+  "category": [
+    "apply",
+    "ai",
+    "shenzhen"
+  ],
+  "tags": [
+    "AI先锋城市",
+    "模型券",
+    "产业扶持",
+    "项目申报"
+  ],
+  "summary": "AI先锋城市项目扶持操作规程，含模型券项目和国产AI生态源头创新中心项目。模型服务期间：2024年12月1日至2026年8月31日。",
+  "url": "https://gxj.sz.gov.cn/gkmlpt/content/12/12077/post_12077746.html",
+  "relevance": 91,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 29,
+  "title": "深圳市加快打造人工智能先锋城市行动计划（2025-2026年）",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市工信局",
+  "date": "2025-03-03",
+  "category": [
+    "ai",
+    "shenzhen"
+  ],
+  "tags": [
+    "深圳",
+    "人工智能",
+    "训力券",
+    "算力"
+  ],
+  "summary": "到2026年AI企业超3000家，独角兽超10家，产业规模年增超20%。推行训力券、语料券、模型券普惠政策，开放100+应用场景。",
+  "url": "https://gxj.sz.gov.cn/xxgk/xxgkml/zcfgjzcjd/content/post_12052814.html",
+  "relevance": 94,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 30,
+  "title": "深圳市加快推进人工智能终端产业发展行动计划（2025-2026年）",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市工信局",
+  "date": "2025-03-03",
+  "category": [
+    "ai",
+    "shenzhen"
+  ],
+  "tags": [
+    "深圳",
+    "AI终端",
+    "智能硬件"
+  ],
+  "summary": "到2026年AI终端产业规模达8万亿+，培育10+家AI终端旗舰企业，产品出货超1.5亿台，发布50+旗舰AI终端。",
+  "url": "https://gxj.sz.gov.cn/xxgk/xxgkml/zcfgjzcjd/content/post_12052745.html",
+  "relevance": 85,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 31,
+  "title": "深圳市具身智能机器人技术创新与产业发展行动计划（2025-2027年）",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-03-03",
+  "category": [
+    "robot",
+    "shenzhen"
+  ],
+  "tags": [
+    "具身智能",
+    "人形机器人",
+    "深圳"
+  ],
+  "summary": "到2027年新增百亿估值企业10家、十亿营收企业20家，十亿级场景50个，关联产业超1000亿元。攻关AI芯片、仿生灵巧手、具身智能基座大模型。",
+  "url": "https://stic.sz.gov.cn/xxgk/tzgg/content/post_12052515.html",
+  "relevance": 95,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 32,
+  "title": "深圳市加快打造人工智能先锋城市行动计划（市政府门户版）",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市政府",
+  "date": "2025-03-03",
+  "category": [
+    "ai",
+    "shenzhen"
+  ],
+  "tags": [
+    "深圳",
+    "人工智能",
+    "应用场景"
+  ],
+  "summary": "每年开放不少于100个城市+AI应用场景，覆盖政务服务、城市治理、教育、医疗、文旅五大领域。建设10+个AI产业集聚区和孵化器。",
+  "url": "https://www.sz.gov.cn/cn/xxgk/zfxxgj/zcfg/content/post_12052816.html",
+  "relevance": 91,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 33,
+  "title": "2025年深圳市承接国家重大科技项目申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-03-01",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "国家项目",
+    "产业化",
+    "项目申报",
+    "深圳"
+  ],
+  "summary": "支持在深单位承接国家重大科技项目并实现产业化落地，需通过深圳市科技业务管理系统在线申报。",
+  "url": "https://www.kbosschina.com/zizhu/zhongda/",
+  "relevance": 86,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 34,
+  "title": "2025年度深圳市科技计划项目申报工作预告",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-02-20",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "年度预告",
+    "科技计划",
+    "项目申报",
+    "深圳"
+  ],
+  "summary": "2025年度科技计划全年申报安排预告，涵盖重点产业研发、基础研究、技术攻关、承接国家项目产业化等多个专项。",
+  "url": "https://stic.sz.gov.cn/xxgk/tzgg/content/post_12096956.html",
+  "relevance": 87,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 35,
+  "title": "2025年度深圳市国家和广东省科技计划项目配套申请指南",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2025-01-10",
+  "category": [
+    "apply",
+    "shenzhen"
+  ],
+  "tags": [
+    "配套资助",
+    "国家项目",
+    "省级项目",
+    "深圳"
+  ],
+  "summary": "对获得国家和广东省科技计划项目支持的在深单位给予配套资助，按国家/省级资助金额一定比例配套。",
+  "url": "https://www.kbosschina.com/tonggao/5886.html",
+  "relevance": 88,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 36,
+  "title": "关于加快发展新质生产力进一步推进战略性新兴产业集群和未来产业高质量发展的实施方案",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市工信局",
+  "date": "2024-08-01",
+  "category": [
+    "ai",
+    "robot",
+    "shenzhen"
+  ],
+  "tags": [
+    "深圳",
+    "新质生产力",
+    "战略新兴产业"
+  ],
+  "summary": "推进战略性新兴产业集群和未来产业高质量发展，涵盖人工智能、机器人、新能源等重点领域。",
+  "url": "https://gxj.sz.gov.cn/gkmlpt/content/11/11191/post_11191027.html",
+  "relevance": 70,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 37,
+  "title": "生成式人工智能服务管理暂行办法",
+  "level": "national",
+  "levelText": "国家级",
+  "department": "国家网信办等七部门",
+  "date": "2023-07-13",
+  "category": [
+    "ai"
+  ],
+  "tags": [
+    "人工智能",
+    "大模型",
+    "监管"
+  ],
+  "summary": "规范生成式AI服务的发展和管理，明确服务提供者的责任义务和用户权益保护要求。",
+  "url": "https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm",
+  "relevance": 70,
+  "fetchedAt": "2026-04-20"
+},
+{
+  "id": 38,
+  "title": "深圳市培育发展未来产业行动计划（2022-2025年）",
+  "level": "city",
+  "levelText": "市级",
+  "department": "深圳市科创委",
+  "date": "2022-06-06",
+  "category": [
+    "ai",
+    "robot",
+    "shenzhen"
+  ],
+  "tags": [
+    "深圳",
+    "未来产业",
+    "科技创新"
+  ],
+  "summary": "深圳市未来产业培育计划，覆盖人工智能、机器人、量子信息等前沿领域的发展规划。",
+  "url": "http://stic.sz.gov.cn/xxgk/kjgh/content/post_9885753.html",
+  "relevance": 65,
+  "fetchedAt": "2026-04-20"
+}
+];
+
+// ===== STATE =====
+let currentFilter = 'all';
+let currentSearch = '';
+let currentSort = 'date';
+let currentPage = 1;
+const PAGE_SIZE = 8;
+
+// ===== INIT =====
+function init() {
+    updateCounts();
+    renderTimeline();
+    performSearch();
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') performSearch();
+    });
+}
+
+// ===== SEARCH =====
+function performSearch() {
+    currentSearch = document.getElementById('searchInput').value.trim().toLowerCase();
+    currentPage = 1;
+    renderPolicies();
+}
+
+function quickSearch(keyword) {
+    document.getElementById('searchInput').value = keyword;
+    performSearch();
+}
+
+// ===== FILTER =====
+function toggleFilter(el) {
+    const cat = el.dataset.category;
+    document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    currentFilter = cat;
+    currentPage = 1;
+
+    // Sync sidebar
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const navItems = document.querySelectorAll('.nav-item');
+    const catMap = {'all':0, 'ai':1, 'robot':2, 'shenzhen':3, 'apply':4};
+    if (catMap[cat] !== undefined) navItems[catMap[cat]]?.classList.add('active');
+
+    renderPolicies();
+}
+
+function filterByCategory(cat, el) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    currentFilter = cat;
+    currentPage = 1;
+
+    // Sync header filter tags
+    document.querySelectorAll('.filter-tag').forEach(t => {
+        t.classList.toggle('active', t.dataset.category === cat);
+    });
+
+    renderPolicies();
+}
+
+// ===== SORT =====
+function sortPolicies() {
+    currentSort = document.getElementById('sortSelect').value;
+    renderPolicies();
+}
+
+// ===== RENDER =====
+function getFilteredPolicies() {
+    let filtered = POLICIES;
+
+    // Category filter
+    if (currentFilter !== 'all') {
+        filtered = filtered.filter(p => p.category.includes(currentFilter));
+    }
+
+    // Search filter
+    if (currentSearch) {
+        const terms = currentSearch.split(/\s+/);
+        filtered = filtered.filter(p => {
+            const haystack = (p.title + ' ' + p.summary + ' ' + p.tags.join(' ') + ' ' + p.department).toLowerCase();
+            return terms.every(t => haystack.includes(t));
+        });
+
+        // Update relevance based on search match
+        filtered = filtered.map(p => {
+            const haystack = (p.title + ' ' + p.summary + ' ' + p.tags.join(' ')).toLowerCase();
+            let score = p.relevance;
+            const terms2 = currentSearch.split(/\s+/);
+            terms2.forEach(t => {
+                if (p.title.toLowerCase().includes(t)) score += 10;
+                if (p.tags.some(tag => tag.toLowerCase().includes(t))) score += 5;
+            });
+            return { ...p, searchScore: Math.min(score, 100) };
+        });
+    } else {
+        filtered = filtered.map(p => ({ ...p, searchScore: p.relevance }));
+    }
+
+    // Sort
+    if (currentSort === 'date') {
+        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (currentSort === 'relevance') {
+        filtered.sort((a, b) => b.searchScore - a.searchScore);
+    } else if (currentSort === 'level') {
+        const order = { national: 0, provincial: 1, city: 2, district: 3 };
+        filtered.sort((a, b) => (order[a.level] || 9) - (order[b.level] || 9));
+    }
+
+    return filtered;
+}
+
+function highlightText(text, search) {
+    if (!search) return text;
+    const terms = search.split(/\s+/).filter(Boolean);
+    let result = text;
+    terms.forEach(term => {
+        const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        result = result.replace(regex, '<mark>$1</mark>');
+    });
+    return result;
+}
+
+function renderPolicies() {
+    const filtered = getFilteredPolicies();
+    const total = filtered.length;
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+    document.getElementById('resultCount').textContent = total;
+
+    const list = document.getElementById('policyList');
+    const empty = document.getElementById('emptyState');
+
+    if (total === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+    }
+
+    empty.style.display = 'none';
+
+    list.innerHTML = pageItems.map(p => {
+        const levelClass = `level-${p.level}`;
+        const tagHtml = p.tags.map(t => {
+            let cls = 'tag-plan';
+            if (t.includes('AI') || t.includes('人工智能') || t.includes('智能') || t.includes('算力') || t.includes('训力') || t.includes('语料')) cls = 'tag-ai';
+            else if (t.includes('机器人') || t.includes('具身')) cls = 'tag-robot';
+            else if (t.includes('深圳') || t.includes('福田')) cls = 'tag-shenzhen';
+            else if (t.includes('补贴') || t.includes('扶持') || t.includes('资助')) cls = 'tag-subsidy';
+            else if (t.includes('标准') || t.includes('规范')) cls = 'tag-standard';
+            else if (t.includes('申报') || t.includes('专项') || t.includes('配套')) cls = 'tag-subsidy';
+            return `<span class="policy-tag ${cls}">${t}</span>`;
+        }).join('');
+
+        return `
+        <div class="policy-card" onclick="openDetail(${p.id})">
+            <div class="policy-card-inner">
+                <div class="policy-card-top">
+                    <span class="policy-level ${levelClass}">${p.levelText}</span>
+                    <div class="policy-title">${highlightText(p.title, currentSearch)}</div>
+                </div>
+                <div class="policy-meta">
+                    <span>🏛️ ${p.department}</span>
+                    <span>📅 ${p.date}</span>
+                    <span>📊 相关度 ${p.searchScore}%</span>
+                </div>
+                <div class="policy-summary">${highlightText(p.summary, currentSearch)}</div>
+                <div class="policy-tags">${tagHtml}</div>
+            </div>
+            <div class="policy-card-footer">
+                <a class="policy-link" href="${p.url}" target="_blank" onclick="event.stopPropagation()">查看原文 →</a>
+                <span class="policy-relevance">
+                    匹配度
+                    <span class="relevance-bar"><span class="relevance-fill" style="width:${p.searchScore}%;background:${p.searchScore > 85 ? '#10b981' : p.searchScore > 70 ? '#f59e0b' : '#94a3b8'}"></span></span>
+                </span>
+            </div>
+        </div>`;
+    }).join('');
+
+    // Pagination
+    let pgHtml = '';
+    for (let i = 1; i <= totalPages; i++) {
+        pgHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+    }
+    document.getElementById('pagination').innerHTML = pgHtml;
+}
+
+function goPage(n) {
+    currentPage = n;
+    renderPolicies();
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+}
+
+// ===== DETAIL MODAL =====
+function openDetail(id) {
+    const p = POLICIES.find(x => x.id === id);
+    if (!p) return;
+
+    const levelClass = `level-${p.level}`;
+    document.getElementById('modalLevel').className = `policy-level ${levelClass}`;
+    document.getElementById('modalLevel').textContent = p.levelText + ' · ' + p.department + ' · ' + p.date;
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalBody').innerHTML = p.content;
+    document.getElementById('modalLink').href = p.url;
+    document.getElementById('modalOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('modalOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+});
+
+// ===== GENERATE DRAFT =====
+function generateDraft() {
+    const title = document.getElementById('modalTitle').textContent;
+    alert(`📝 申报参考生成功能将在下一版本上线！\n\n当前选中政策：\n"${title}"\n\n该功能将支持：\n• 根据政策要求自动生成申报书框架\n• 匹配企业信息填充模板\n• AI辅助撰写项目可行性分析\n• 导出Word/PDF格式文档`);
+}
+
+// ===== COUNTS =====
+function updateCounts() {
+    document.getElementById('totalPolicies').textContent = POLICIES.length;
+    document.getElementById('countAll').textContent = POLICIES.length;
+    document.getElementById('countAi').textContent = POLICIES.filter(p => p.category.includes('ai')).length;
+    document.getElementById('countRobot').textContent = POLICIES.filter(p => p.category.includes('robot')).length;
+    document.getElementById('countSz').textContent = POLICIES.filter(p => p.category.includes('shenzhen')).length;
+    document.getElementById('countApply').textContent = POLICIES.filter(p => p.category.includes('apply')).length;
+}
+
+// ===== TIMELINE =====
+function renderTimeline() {
+    const sorted = [...POLICIES].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+    document.getElementById('timelineList').innerHTML = sorted.map(p => `
+        <div class="timeline-item" onclick="openDetail(${p.id})">
+            <div class="t-date">${p.date}</div>
+            <div class="t-title">${p.title.length > 30 ? p.title.substring(0, 30) + '...' : p.title}</div>
+        </div>
+    `).join('');
+}
+
+// ===== GLOBAL STATE FOR AUTO-REFRESH =====
+let lastUpdateTime = null;
+let refreshInterval = null;
+const REFRESH_INTERVAL_MINUTES = 60; // 每60分钟自动刷新
+
+// ===== LOAD EXTERNAL DATA =====
+async function loadExternalPolicies(isRefresh = false) {
+    try {
+        // 添加时间戳参数避免缓存
+        const resp = await fetch(`./policies.json?_=${Date.now()}`);
+        if (!resp.ok) throw new Error('No external data');
+        const data = await resp.json();
+        
+        if (data.policies && data.policies.length > 0) {
+            // 检查是否有新数据
+            const currentUpdate = data.meta?.updatedAt;
+            const hasNewData = !lastUpdateTime || currentUpdate !== lastUpdateTime;
+            
+            if (hasNewData || !isRefresh) {
+                // 为外部数据补充content字段（如果没有）
+                const enriched = data.policies.map(p => ({
+                    ...p,
+                    content: p.content || generateDefaultContent(p),
+                    relevance: p.relevance || 80,
+                    category: Array.isArray(p.category) ? p.category : [p.category || 'ai']
+                }));
+                // 合并：外部数据 + 内置数据去重
+                const externalTitles = new Set(enriched.map(p => p.title.replace(/\s+/g, '')));
+                const builtinNew = POLICIES.filter(p => !externalTitles.has(p.title.replace(/\s+/g, '')));
+                POLICIES.length = 0;
+                POLICIES.push(...enriched, ...builtinNew);
+                // 重新分配ID
+                POLICIES.forEach((p, i) => p.id = i + 1);
+                
+                // 更新时间戳
+                lastUpdateTime = currentUpdate;
+                
+                // 更新数据源状态显示
+                updateStatusDisplay(data.meta, isRefresh);
+                
+                if (isRefresh && hasNewData) {
+                    showRefreshNotification(enriched.length);
+                }
+                
+                console.log(`✅ 已加载外部政策数据: ${enriched.length}条`);
+                return true;
+            } else {
+                console.log('ℹ️ 数据未更新，跳过刷新');
+                return false;
+            }
+        }
+    } catch(e) {
+        console.log('ℹ️ 未找到外部数据源(policies.json)，使用内置数据');
+    }
+    return false;
+}
+
+function updateStatusDisplay(meta, isRefresh) {
+    if (meta) {
+        const updateTime = meta.updatedAt ? new Date(meta.updatedAt).toLocaleString('zh-CN') : '未知';
+        const newCount = meta.newToday || 0;
+        const totalCount = meta.total || POLICIES.length;
+        
+        const statusText = isRefresh 
+            ? `数据已同步 | 更新: ${updateTime}`
+            : `数据更新: ${updateTime} | 今日新增: ${newCount}条`;
+        
+        document.querySelector('.api-status span').textContent = statusText;
+        
+        // 更新统计数字
+        if (meta.total) {
+            document.getElementById('totalPolicies').textContent = meta.total;
+        }
+    }
+}
+
+function showRefreshNotification(newCount) {
+    const notice = document.createElement('div');
+    notice.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: linear-gradient(135deg, #1a56db 0%, #06b6d4 100%);
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(26, 86, 219, 0.3);
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    `;
+    notice.innerHTML = `
+        <span style="font-size:20px;">🔄</span>
+        <div>
+            <div style="font-weight:600;margin-bottom:2px;">数据已更新</div>
+            <div style="font-size:12px;opacity:0.9;">新增 ${newCount} 条政策</div>
+        </div>
+        <button onclick="this.parentElement.remove()" style="
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 8px;
+            padding: 6px;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+            margin-left: 12px;
+        ">&times;</button>
+    `;
+    
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(notice);
+    
+    setTimeout(() => {
+        notice.remove();
+        style.remove();
+    }, 5000);
+}
+
+// ===== AUTO-REFRESH =====
+function startAutoRefresh() {
+    if (refreshInterval) return;
+    
+    refreshInterval = setInterval(async () => {
+        console.log(`🔄 自动检查更新 (每${REFRESH_INTERVAL_MINUTES}分钟)`);
+        const hasNewData = await loadExternalPolicies(true);
+        if (hasNewData) {
+            updateCounts();
+            renderTimeline();
+            renderPolicies();
+        }
+    }, REFRESH_INTERVAL_MINUTES * 60 * 1000);
+    
+    console.log(`⏰ 自动刷新已启动，每${REFRESH_INTERVAL_MINUTES}分钟检查一次`);
+}
+
+function stopAutoRefresh() {
+    if (refreshInterval) {
+        clearInterval(refreshInterval);
+        refreshInterval = null;
+        console.log('⏹️ 自动刷新已停止');
+    }
+}
+
+// 手动刷新按钮功能
+function manualRefresh() {
+    const statusElement = document.querySelector('.api-status');
+    statusElement.innerHTML = `<div class="api-dot"></div><span style="color:rgba(255,255,255,0.7)">正在刷新...</span>`;
+    
+    loadExternalPolicies(true).then((hasNewData) => {
+        if (hasNewData) {
+            updateCounts();
+            renderTimeline();
+            renderPolicies();
+        }
+    }).catch(() => {
+        statusElement.innerHTML = `<div class="api-dot"></div><span style="color:rgba(255,255,255,0.7)">刷新失败</span>`;
+        setTimeout(() => {
+            updateStatusDisplay({ updatedAt: lastUpdateTime }, false);
+        }, 2000);
+    });
+}
+
+function generateDefaultContent(p) {
+    return `<h3>政策概述</h3>
+<p>${p.summary || p.title}</p>
+<h3>来源信息</h3>
+<ul>
+<li><strong>发布部门：</strong>${p.department || '未知'}</li>
+<li><strong>发布日期：</strong>${p.date || '未知'}</li>
+<li><strong>政策级别：</strong>${p.levelText || '未知'}</li>
+</ul>
+<p>💡 完整政策内容请点击下方"查看原文"链接访问官方网站。</p>`;
+}
+
+// ===== INIT =====
+async function startup() {
+    await loadExternalPolicies();
+    init();
+    startAutoRefresh();
+}
+startup();
+
+// 页面卸载时停止自动刷新
+window.addEventListener('beforeunload', stopAutoRefresh);
+</script>
+</body>
+</html>
